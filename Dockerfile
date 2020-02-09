@@ -38,6 +38,7 @@ RUN  echo "10.16.91.63 github.global.ssl.fastly.Net" >> /etc/hosts
 
 USER root 
 
+WORKDIR /app
 
 EXPOSE 8888
 ENTRYPOINT ["jupyter", "notebook", "--allow-root"]
