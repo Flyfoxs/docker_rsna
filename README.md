@@ -1,25 +1,17 @@
-## Run the container
-Change to the *docker* directory of this repository:
-```
-cd docker
-USER_ID=$UID docker-compose run detectron2
-```
 
-#### Using a persistent cache directory
-Prevents models to be re-downloaded on every run, by storing them in a cache directory.
 
-`docker-compose run --volume=/path/to/cache:/tmp:rw detectron2`
+# Install GPU Docker
 
-## Rebuild the container
-Rebuild the container  by `USER_ID=$UID docker-compose build detectron2`.
-This is only necessary when `Dockerfile` has been changed. The initial build is done automatically.
+https://github.com/NVIDIA/nvidia-docker
 
-## Install new dependencies
-Add the following to `Dockerfile` to make persistent changes.
-```
-RUN sudo apt-get update && sudo apt-get install -y \
-  nano vim emacs
-RUN pip install --user pandas
-```
-Or run them in the container to make temporary changes.
-# docker_rsna
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+
+
+# Test GPU Docker
+
+docker run --gpus all nvidia/cuda:10.1-cudnn7-devel nvidia-smi

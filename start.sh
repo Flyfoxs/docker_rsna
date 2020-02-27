@@ -6,7 +6,7 @@ echo $cur_path
 
 mkdir -p /tmp/docker
 
-docker_name=rsna
+docker_name=gpu_cuda10
 docker stop $docker_name
 docker rm $docker_name
 
